@@ -13,7 +13,7 @@ print(x)
 
 
 #Experiment with real think
-price_delta <- sample(-50:50, 100, replace = TRUE)
+price_delta <- sample(-50:50, 10000, replace = TRUE)
 price <- 1000
 
 # outputbuf <- vector()
