@@ -15,7 +15,7 @@ b <- c("one","two","three")
 c <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) 
 
 # Get 2nd and 4th elements of vector
-d <- a[c(2,4)]
+z <- a[c(2,4)]
 
 
 ##
@@ -55,5 +55,9 @@ print(x[2:4,1:3])
 d <- c(1,2,3,4)
 e <- c("red", "white", "red", NA)
 f <- c(TRUE,TRUE,TRUE,FALSE)
+
+# Creates data frames, used as the fundamental data structure
 mydata <- data.frame(d,e,f)
-names(mydata) <- c("ID","Color","Passed") # variable names 
+
+# Set the variable names of the object
+names(mydata) <- c("ID","Color","Passed") 
