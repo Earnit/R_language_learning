@@ -5,8 +5,8 @@
 # VECTORS
 ##
 
-print("Numeric vector")
-print(a <- c(1,2,5.3,6,-2,4))
+# Numeric vector
+a <- c(1,2,5.3,6,-2,4)
 
 # Character vector
 b <- c("one","two","three") 
@@ -14,8 +14,8 @@ b <- c("one","two","three")
 # Logical vector
 c <- c(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE) 
 
-print("2nd and 4th elements of vector")
-print(a[c(2,4)])
+# Get 2nd and 4th elements of vector
+d <- a[c(2,4)]
 
 
 ##
