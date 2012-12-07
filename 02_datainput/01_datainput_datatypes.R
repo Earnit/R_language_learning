@@ -78,7 +78,92 @@ print(mydata$Age)
 
 
 ##
-# List
+# LISTS
 ##
-print("### LIST ###")
+print("### LISTS ###")
 
+# Example of a list with 4 components -
+# a string, a numeric vector, a matrix, and a scaler
+w <- list(name="Fred", mynumbers=a, mymatrix, 5.3)
+print(w)
+
+# Example of a list containing two lists
+x <- c(list("listpart", 1),w) 
+print(x)
+
+# Identify elements of a list using the [[]] convention
+# 2nd component of the list
+print(x[[3]])
+
+# Component named mynumbers in list
+print(x[["mynumbers"]])
+
+
+##
+# FACTORS
+##
+print("### FACTORS ###")
+
+# Variable gender with 20 "male" entries and 30 "female" entries 
+gender <- c(rep("male",20), rep("female", 30))
+print(summary(gender))
+
+# Stores gender as 20 1s and 30 2s and associates 
+# 1=female, 2=male internally (alphabetically)
+# R now treats gender as a nominal variable, also check ordered( ) func
+gender <- factor(gender)
+print(summary(gender))
+
+
+##
+# USEFUL FUNCTIONS
+##
+print("### USEFUL FUNCTIONS ###")
+
+# Number of elements or components
+print(length(gender))
+print(length(x))
+
+# Sructure of an object
+print(str(gender))
+print(str(x))
+
+# Class or type of an object
+print(class(gender))
+print(class(x))
+print(class(id))
+
+# Names
+print(names(gender))
+print(names(x))
+print(names(id))
+
+# Combine objects into a vector
+# c(object,object,...)
+
+# Combine objects as columns
+# cbind(object, object, ...)
+m<-cbind(1, 1:7)
+print(m)
+m <- cbind(m, 8:14)[, c(1, 3, 2)]
+print(m)
+
+# Combine objects as rows
+# rbind(object, object, ...)
+m<-rbind(1:3, 2:7, 3)
+print(m)
+
+# Mixup example
+print(cbind(0, rbind(1, 1:3)))
+
+# List current objects
+# ls()       
+# Delete an object
+# rm(object) 
+# Delete all current objects rm(list=ls())
+
+# Edit copy and save as newobject
+# newobject <- edit(f) 
+
+# Edit in place
+# fix(vol)               
