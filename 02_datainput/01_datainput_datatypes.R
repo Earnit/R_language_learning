@@ -147,6 +147,8 @@ m<-cbind(1, 1:7)
 print(m)
 m <- cbind(m, 8:14)[, c(1, 3, 2)]
 print(m)
+m <- m[, c(3, 1, 2)]
+print(m)
 
 # Combine objects as rows
 # rbind(object, object, ...)
