@@ -23,38 +23,59 @@
 
 rm(list = ls())
 
-percent <- function(val, per) {
-  (val / 100) * per
+
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+##
+# base: basic value
+# pc: percent, which we want to get
+# return: value
+##
+percent_val <- function(base, pc) {
+  (base / 100) * pc
 }
+
+##
+# base: basic value - 100%
+# val: value
+# return: ratio between base & val in percents
+##
+percent_pc <- function(base, val) {
+  (val * 100) / base
+}
+
+
+###############################################################################
+##
+# Otnoshenie prosrat' k zarabotat'
 # 
-# earn = 35000
-# spend = 30000
-# 
-# nakoplenie_mas = vector()
-# i = 0
-# earnplus = 0
-# plus = 0
-# 
-# repeat {
-#   earnplus <- earn+percent(earn, i)
-#   plus <- earnplus - spend
-#   nakoplenie_mas <- c(nakoplenie_mas, plus)
-#   i <- i+1
-#   if(i==38)
-#     break
-# }
-# 
-# otnoshenie = 0
-# otnoshenie_mas = vector()
-# 
-# print("=======================")
-# for(i in nakoplenie_mas) {
-#   otnoshenie <- (i/head(nakoplenie_mas, 1)) * 100
-#   cat("Otn ", otnoshenie, "==", head(nakoplenie_mas, 1), "==", i , "==\n")
-#   otnoshenie_mas <- c(otnoshenie_mas, otnoshenie)
-# }
-# 
-# lines(otnoshenie_mas)
+##
+losegain <- function() {
+  depo = 100000
+  needtogain = vector()
+  lose = vector()
+  plotdata = vector()
+  
+  for (i in 1:80) {
+    deposizeloss = percent_val(depo, i)
+    plotdata <- c(plotdata, percent_pc(depo-deposizeloss, deposizeloss))
+  }
+  data.frame(plotdata, row.names=NULL)
+}
+  
+require(ggplot2)
+df <- foo()
+print(ggplot(df, aes(1:length(df$plotdata), df$plotdata)) + geom_point() + 
+      xlab("Percents of our start depo that we have lost") +
+      ylab("Percent of our current depo that we need to gain to return base depo") +
+      #opts(strip.background = theme_rect(colour = 'purple', fill = 'pink', size = 3, linetype='dashed')))
+      theme(panel.background = theme_rect(fill='green', colour='red')))
+
+
+
 
 
 ###############################################################################
@@ -63,15 +84,15 @@ percent <- function(val, per) {
 # 1% profit will be gained on ?% grow base active
 
 ##
-# depo: depo size, (100000)
 # stopperc: maximum depo loss in percents (80)
 # lossperc: maximum single trade loss in percents (2)
 # return: quantity of trades that you can lose
 ##
-losetrades <- function(depo, stopperc,  lossperc) {
-  stoploss = percent(depo, stopperc)
+losetrades <- function(stopperc,  lossperc) {
+  depo = 100000
+  stoploss = percent_val(depo, stopperc)
   for(i in 1:10000) {
-    depo <- depo - percent(depo, lossperc)
+    depo <- depo - percent_val(depo, lossperc)
     if (depo < stoploss)
       break
   }
@@ -79,32 +100,49 @@ losetrades <- function(depo, stopperc,  lossperc) {
 }
 
 ##
-# Customizable function
+# maxslump: maximum depo slump in percents (80)
+# range: pecents, that we can lose in sigle trade, could be defined as array 
+#        seq(from = 0.5, to = 5, by =0.1)
+# return: statistic data for plotting
 ##
-plotlosetrades <- function() {
-  depo = 100000
+losetrades_statdata <- function(maxslump, pcrange) {
   mas = vector()
-  for(i in seq(from = 0.5, to = 5, by =0.1)) {
-    trades <- losetrades(depo, 80, i)
-    cat("i:", i, " trades:", trades, "\n")
+  for(i in pcrange) {
+    trades <- losetrades(maxslump, i)
     mas <- rbind(mas, c(i, trades))
   }
+  return(mas)
+}
+
+##
+## NOT FUNC, CONSOLE CMDs
+##
+# statdata <- losetrades_statdata(80, seq(from = 0.5, to = 5, by =0.1))
+# #print(qplot(statdata[,1], statdata[,2]))
+# print(ggplot(as.data.frame(statdata), aes(statdata[,1], statdata[,2])) + geom_point() +
+#         scale_x_continuous(breaks=seq(0, 5, 0.5)) +
+#         scale_y_continuous(breaks=seq(0, 50, 2)))
+
+
+###############################################################################
+# Hlam
+
+foo <- function() {
+  mas <- c(1:100)
   df <- data.frame(mas)
-  names(df) <- c("percent", "trades")
-  # !!! 7.22 Why do lattice/trellis graphics not work?
-  library(ggplot2)
-  gp <- ggplot(df, aes(df$percent, df$trades)) + geom_point() + 
-    scale_x_continuous(breaks=seq(0, 5, 0.5)) + 
-    scale_y_continuous(breaks=seq(0, 50, 2))
-#  print(gp)  # WTF!!!!!!!!!!!
+  print(mas)
+  ggplot(df, aes(x = 1:100, y = 1:100)) + geom_point()
 }
+#print(foo())
 
-
-foo <- function(val) {
-  
+##
+#
+##
+f <- function() {
+  a <- 1:10
+  b <- a ^ 2
+  #qplot(a, b)
+  df <- data.frame(gp = factor(rep(letters[1:3], each = 10)), y = rnorm(30))
+  ggplot(df, aes(x = gp, y = y)) + geom_point()
 }
-
-mydata = data.frame(cbind(1:80, 10:30))
-#print(library(ggplot2))
-#print(qplot(1:80, 1:100, mydata, geom = "density"))
-qplot(mydata, geom = "density")
+#print(f())

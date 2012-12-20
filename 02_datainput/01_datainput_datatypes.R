@@ -1,4 +1,5 @@
-# I took this code from http://www.statmethods.net/input/datatypes.html
+# Significant part of the code was taken from
+# http://www.statmethods.net/input/datatypes.html
 
 
 ##
